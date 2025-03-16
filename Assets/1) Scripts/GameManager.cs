@@ -8,12 +8,16 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     private int[,] currentMap;
     private int[] measures;
-    private int[,,] directionStatics;
+    private int[,,] directionStatistics;
+
+    private float[,,] updatedStatistics;
     private int[,] visitedMap;
 
     public string MapPath;
-    public string staticsPath;
+    public string statisticsPath;
 
+    public DirectionSign directionSign;
+    [SerializeField] private StatisticUpdate statisticUpdate;
 
     [SerializeField] private TMP_InputField staticsPathInputBox;
     [SerializeField] private TMP_InputField mapPathInputBox;
@@ -23,7 +27,6 @@ public class GameManager : MonoBehaviour
 
     private int[] playerPos = new int[2];
 
-    public DirectionSign directionSign;
     [SerializeField] private GameObject player;
     private void Awake() => instance = this;
 
@@ -62,12 +65,31 @@ public class GameManager : MonoBehaviour
         currentMap = map;
         this.measures = measures;
         visitedMap = new int[measures[1], measures[2]];
-        directionSign.SetParameters(directionStatics, measures, player.transform);
+        statisticUpdate.UpdateStatics(updatedStatistics, measures);
+        directionSign.SetParameters(updatedStatistics, measures, player.transform);
     }
-    public void LoadStatisticsInFile()
+    public void LoadStatisticsInFile(int[] measures)
     {
-        staticsPath = staticsPath != null ? staticsPath : staticsPathInputBox.text;
-        directionStatics = FileReader.LoadDirectionStatics(staticsPath);
+        statisticsPath = statisticsPath != null ? statisticsPath : staticsPathInputBox.text;
+        directionStatistics = FileReader.LoadDirectionStatics(statisticsPath);
+        if (directionStatistics != null)
+        {
+            updatedStatistics = new float[measures[1], measures[2], 4];
+            for (int i = 0; i < measures[1]; i++)
+            {
+                for (int j = 0; j < measures[2]; j++)
+                {
+                    for (int k = 0; k < 4; k++)
+                    {
+                        updatedStatistics[i, j, k] = (float)directionStatistics[i,j,k];
+                    }
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("Statistics not loaded");
+        }
     }
     public string LoadMapInFile()
     {

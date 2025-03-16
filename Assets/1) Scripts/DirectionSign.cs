@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 public class DirectionSign : MonoBehaviour
 {
-    private int[,,] directionData;
+    private float[,,] directionData;
     private int[] measures;
     private Transform player;
     [SerializeField] private float animDuration;
@@ -36,7 +36,7 @@ public class DirectionSign : MonoBehaviour
         mat.EnableKeyword("_ALPHAPREMULTIPLY_ON");
         mat.renderQueue = 3000; // Transparent Queue
     }
-    public void SetParameters(int[,,] directionData, int[] measures, Transform player)
+    public void SetParameters(float[,,] directionData, int[] measures, Transform player)
     {
         this.directionData = directionData;
         this.measures = measures;
@@ -84,8 +84,8 @@ public class DirectionSign : MonoBehaviour
         {
             Vector3 tPos = targetPos;
             signs[i].transform.position = CalcSingPos(i, tPos);
-            int value = directionData[pos[0], pos[1], i];
-            signTexts[i].text = (value==0) ? "" : value.ToString();
+            float value = directionData[pos[0], pos[1], i];
+            signTexts[i].text = (value==0) ? "" : value.ToString("F1");
             signMat[i] = ChangeColor(value, signMat[i]);
             StartCoroutine(SignAnim(true, signMat[i]));
 
@@ -146,7 +146,7 @@ public class DirectionSign : MonoBehaviour
 
     }
     
-    private Material ChangeColor(int value, Material m)
+    private Material ChangeColor(float value, Material m)
     {
         value = Mathf.Clamp(value, 0, 100);
         float r, g, b, a = 255;

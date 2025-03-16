@@ -1810,13 +1810,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MapPath: D:\0-3) PROJE\1) Devam eden\Shortest_Path\Shortest_Path-v1\Maps_10k.bin
-  staticsPath: D:\0-3) PROJE\1) Devam eden\Shortest_Path\Shortest_Path-v1\paket\PercentData.bin
+  statisticsPath: D:\0-3) PROJE\1) Devam eden\Shortest_Path\Shortest_Path-v1\paket\PercentData.bin
+  directionSign: {fileID: 575344505}
+  statisticUpdate: {fileID: 575344506}
   staticsPathInputBox: {fileID: 897389952}
   mapPathInputBox: {fileID: 1463704339}
   xInputBox: {fileID: 116477128}
   yInputBox: {fileID: 564383099}
   Map: {fileID: 1776296215}
-  directionSign: {fileID: 575344505}
   player: {fileID: 139521789}
 --- !u!4 &575344504
 Transform:
@@ -2955,18 +2956,6 @@ MonoBehaviour:
       - m_Target: {fileID: 1457353742}
         m_TargetAssemblyTypeName: MapCreate, Assembly-CSharp
         m_MethodName: MapLoadButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 575344503}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: LoadStatisticsInFile
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

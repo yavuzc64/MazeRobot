@@ -79,6 +79,8 @@ public class MapCreate : MonoBehaviour
         mapInstantiate(measures[1], measures[2]);
         isMapAvailable = true;
         mapIndexPanel.SetActive(true);
+
+        GameManager.instance.LoadStatisticsInFile(measures);
     }
     public void mapDestroyButton()
     {
