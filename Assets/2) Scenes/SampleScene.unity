@@ -1789,6 +1789,7 @@ GameObject:
   - component: {fileID: 575344504}
   - component: {fileID: 575344503}
   - component: {fileID: 575344505}
+  - component: {fileID: 575344506}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -1808,6 +1809,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cdeb827f5760b64ea8f80120529d2c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MapPath: D:\0-3) PROJE\1) Devam eden\Shortest_Path\Shortest_Path-v1\Maps_10k.bin
+  staticsPath: D:\0-3) PROJE\1) Devam eden\Shortest_Path\Shortest_Path-v1\paket\PercentData.bin
+  staticsPathInputBox: {fileID: 897389952}
+  mapPathInputBox: {fileID: 1463704339}
   xInputBox: {fileID: 116477128}
   yInputBox: {fileID: 564383099}
   Map: {fileID: 1776296215}
@@ -1850,6 +1855,18 @@ MonoBehaviour:
   - {fileID: 151869797}
   signTexts: []
   signMat: []
+--- !u!114 &575344506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575344502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5c2e64ec56a32b4ba47359d2543ec16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &580726371
 GameObject:
   m_ObjectHideFlags: 0
@@ -2949,7 +2966,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 575344503}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: LoadDirectionStatics
+        m_MethodName: LoadStatisticsInFile
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4302,7 +4319,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapText: 
   mapTextObject: {fileID: 288149563}
-  pathInputBox: {fileID: 1463704339}
   pathTemp: 
   mapIndexPanel: {fileID: 1225251073}
   indexInputBox: {fileID: 1083724313}
