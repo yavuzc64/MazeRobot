@@ -10,8 +10,8 @@ public class GameManager : MonoBehaviour
     private int[] measures;
     private int[,,] directionStatistics;
 
-    private float[,,] updatedStatistics;
-    private int[,] visitedMap;
+    public float[,,] updatedStatistics;
+    public int[,] visitedMap;
 
     public string MapPath;
     public string statisticsPath;
@@ -28,8 +28,14 @@ public class GameManager : MonoBehaviour
     private int[] playerPos = new int[2];
 
     [SerializeField] private GameObject player;
+
+
+    public Stack<int[]> terminalPoint = new Stack<int[]>();
+    public Stack<int[]> straigthPoint = new Stack<int[]>();
+
     private void Awake() => instance = this;
 
+    //Position Functions
     public void initPos()
     {
         SetPos(int.Parse(xInputBox.text), int.Parse(yInputBox.text));
@@ -47,8 +53,7 @@ public class GameManager : MonoBehaviour
     {
         return new int[] { playerPos[0], playerPos[1] }; // Kopyasýný dondur
     }
-
-    public bool isValidPos(int x, int y)
+    public bool isValidPos(int x, int y, bool visited=false)
     {
         if (x < 0 || x >= measures[1] || y < 0 || y >= measures[2])
         {
@@ -58,13 +63,24 @@ public class GameManager : MonoBehaviour
         {
             return false;
         }
+        if (visited && visitedMap[x, y] > 0)
+        {
+            return false;
+        }
         return true;
     }
+
+
+    //Load Functions
     public void LoadMap(int[,] map, int[] measures)
     {
         currentMap = map;
         this.measures = measures;
         visitedMap = new int[measures[1], measures[2]];
+        if (directionStatistics != null)
+        {
+            AssignToUpdatedStatstics(measures);
+        }
         statisticUpdate.UpdateStatics(updatedStatistics, measures);
         directionSign.SetParameters(updatedStatistics, measures, player.transform);
     }
@@ -75,16 +91,7 @@ public class GameManager : MonoBehaviour
         if (directionStatistics != null)
         {
             updatedStatistics = new float[measures[1], measures[2], 4];
-            for (int i = 0; i < measures[1]; i++)
-            {
-                for (int j = 0; j < measures[2]; j++)
-                {
-                    for (int k = 0; k < 4; k++)
-                    {
-                        updatedStatistics[i, j, k] = (float)directionStatistics[i,j,k];
-                    }
-                }
-            }
+            AssignToUpdatedStatstics(measures);
         }
         else
         {
@@ -96,6 +103,84 @@ public class GameManager : MonoBehaviour
         return MapPath != null ? MapPath : mapPathInputBox.text;
     }
 
-
-
+    //other functions
+    private void AssignToUpdatedStatstics(int[] measures)
+    {
+        for (int i = 0; i < measures[1]; i++)
+        {
+            for (int j = 0; j < measures[2]; j++)
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    updatedStatistics[i, j, k] = (float)directionStatistics[i, j, k];
+                }
+            }
+        }
+    }
+    public bool IsValidThisDirection(int i, int j, int direction, bool visitedCtrl=false)
+    {
+        //yukari asagi sol sag
+        //  0      1    3   2
+        if (direction == 0)
+        {
+            return isValidPos(i - 1, j, visitedCtrl);
+        }
+        else if (direction == 1)
+        {
+            return isValidPos(i + 1, j, visitedCtrl);
+        }
+        else if (direction == 2)
+        {
+            return isValidPos(i, j - 1, visitedCtrl);
+        }
+        else if (direction == 3)
+        {
+            return isValidPos(i, j + 1, visitedCtrl);
+        }
+        return false;
+    }
+    public int[] ChangeArrByDirection(int currX, int currY, int direction)
+    {
+        //yukari asagi sol sag
+        //  0      1    3   2
+        if (direction == 0)
+        {
+            return new int[] { currX - 1, currY };
+        }
+        else if (direction == 1)
+        {
+            return new int[] { currX + 1, currY };
+        }
+        else if (direction == 2)
+        {
+            return new int[] { currX, currY - 1 };
+        }
+        else if (direction == 3)
+        {
+            return new int[] { currX, currY + 1 };
+        }
+        return new int[] { currX ,  currY};
+    }
+    public Vector3 ChangeV3ByDirection( int direction)
+    {
+        /*  adim uzunlugu sabit verildi degistir    */
+        Vector3 c = player.transform.position;
+        if(direction == 0)
+        {
+            c.z += 1;
+        }
+        else if (direction == 1)
+        {
+            c.z -= 1;
+        }
+        else if (direction == 2)
+        {
+            c.x -= 1;
+        }
+        else if (direction == 3)
+        {
+            c.x += 1;
+        }
+        return c;
+    }
 }

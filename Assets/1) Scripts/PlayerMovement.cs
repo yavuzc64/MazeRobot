@@ -81,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private IEnumerator MovePlayer(Vector3 targetPos)
+    public IEnumerator MovePlayer(Vector3 targetPos)
     {
         isMoving = true;
         Vector3 startPos = player.transform.position;
