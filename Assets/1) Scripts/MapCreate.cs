@@ -25,6 +25,10 @@ public class MapCreate : MonoBehaviour
     [SerializeField] private GameObject mapGround;
     private Dictionary<Vector2Int, GameObject> blocks = new Dictionary<Vector2Int, GameObject>();
 
+
+
+    [SerializeField] private int firstStep = 0;// gecici            sil
+    [SerializeField] bool increaseStepbyStep = false;// gecici      sil
     private void Start()
     {
         blockSize = blockObj.transform.localScale;
@@ -94,7 +98,10 @@ public class MapCreate : MonoBehaviour
     }
     public void mapIndexLoadButton()
     {
-        int input = int.Parse(indexInputBox.text);
+        int input = (increaseStepbyStep) ? firstStep : int.Parse(indexInputBox.text);
+        firstStep++;
+        Debug.LogWarning("Acilan haritanin indexi : " + input);
+
         int[,] currentMap = FileReader.LoadNthMatrix(pathTemp, input);
         if (input >= measures[0])
         {

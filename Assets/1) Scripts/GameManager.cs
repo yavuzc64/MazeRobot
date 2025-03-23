@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     public float[,,] updatedStatistics;
     public int[,] visitedMap;
+    [SerializeField] private TMP_Text visitedText;
 
     public string MapPath;
     public string statisticsPath;
@@ -48,6 +49,7 @@ public class GameManager : MonoBehaviour
         playerPos[1] = y;
         visitedMap[x, y]++;
         //print("Player Pos: " + playerPos[0] + " " + playerPos[1]);
+        printVisited();
     }
     public int[] GetPos()
     {
@@ -68,6 +70,21 @@ public class GameManager : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+
+    private void printVisited()
+    {
+        string s = "";
+        for (int i = 0; i < measures[1]; i++)
+        {
+            for (int j = 0; j < measures[2]; j++)
+            {
+                s += visitedMap[i, j] + " ";
+            }
+            s += "\n";
+        }
+        visitedText.text = s;
     }
 
 
@@ -183,4 +200,9 @@ public class GameManager : MonoBehaviour
         }
         return c;
     }
+    public Vector3 ConvertToGamePos(int x, int y)
+    {
+        return Map.transform.position + new Vector3(y, 0.4f, -x);
+    }
+
 }
